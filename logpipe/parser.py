@@ -30,3 +30,19 @@ def parse_auto(line):
     if line.startswith('{'):
         return parse_json(line)
     return parse_kv(line)
+
+def parse_syslog(line):
+    """basic syslog format: Mon DD HH:MM:SS host process[pid]: message"""
+    m = re.match(
+        r'(\w+ +\d+ \d+:\d+:\d+) (\S+) (\S+?)(?:\[(\d+)\])?: (.+)',
+        line.strip()
+    )
+    if not m:
+        return None
+    return {
+        'timestamp': m.group(1),
+        'host': m.group(2),
+        'process': m.group(3),
+        'pid': m.group(4) or '',
+        'message': m.group(5),
+    }
