@@ -48,3 +48,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# TODO: add --rate flag to show events/sec
+# TODO: add --sample N to only process every Nth line
